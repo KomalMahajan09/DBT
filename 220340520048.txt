@@ -1,0 +1,99 @@
+1) drop table Dept;
+create table dept(
+deptno int,
+dname varchar(15),
+loc varchar(10)
+);
+
+
+insert into dept values 
+(10,'ACCOUNTING','NEW YORK'),
+(20,'RESEARCH','DALLAS'),
+(30,'SALES' ,'CHICAGO'),
+(40,'OPERATIONS','BOSTON');
+------------------------------------------------------------------
+2) drop table emp;
+create table emp(
+empno int,
+ename varchar(10),
+job varchar(9),
+hiredate date,
+sal float,
+comm float,
+deptno int
+);
+
+
+insert into emp values 
+(7839,'KING',' MANAGER','1991-11-17',5000,NULL,10),
+(7698,'BLAKE','CLERK','1981-05-01',2850, NULL, 30),
+(7782,'CLARK', 'MANAGER','1981-06-09',2450,NULL,10),
+(7566,'JONES', 'CLERK', '1981-04-02', 2975, NULL, 20),
+(7654, 'MARTIN', 'SALESMAN','1981-09-28',1250 ,1400, 30),
+(7499,'ALLEN', 'SALESMAN', '1981-02-20', 1600, 300, 30);
+----------------------------------------------------------------
+3)
+	select * from emp where sal>=2500 and sal<=5000;
+---------------------------------------------------------------------
+4)
+      select ename from emp order by ename desc;
+----------------------------------------------------------------------
+5)
+	select lower(job) Job from emp;
+----------------------------------------------------------------------
+
+6)  select ename,length(ename) lengthof from emp;
+----------------------------------------------------------------------
+7)
+	select dept.deptno ,count(emp.deptno) 'Count of emp'from dept,emp where dept.deptno=emp.deptno group by emp.deptno;
+
+----------------------------------------------------------------------------------------------------------------------------
+8)
+	select dname,ename from dept,emp where dept.deptno=emp.deptno group by emp.ename;
+-------------------------------------------------------------------------------------------------------- 
+9)   select instr(ename,'AR') from emp;
+-------------------------------------------------------------------------------------------
+10)
+	select ename,sal,sal*0.2 hra from emp;
+----------------------------------------------------------------------------------------------------
+						
+						SECTION 2
+1)drop table TEMPP;
+create table TEMPP
+(
+	str1 varchar(10),
+    str2 varchar(20),
+    result varchar(30)
+);
+
+delimiter //
+create procedure PROC1(str1 varchar(10),str2 varchar(30))
+begin
+
+		if instr(str2,str1) then 
+			insert into TEMPP values(str1,str2,'exist');
+		else 
+			insert into TEMPP values (str1,str2,'Not exist');
+		end if;
+end; //
+delimiter ;
+call PROC1('DAC','CDAC');
+call PROC1('KOMAL','CDAC');
+select * from TEMPP;
+drop procedure PROC1;
+drop table TEMPP;
+-------------------------------------------------------------------------------
+2)
+    delimiter //
+create function FUNC1(x int,y int,z int )
+returns boolean
+deterministic
+begin
+	
+    if x<y+z and y<x+z and z<x+y then 
+		return true;
+	else 
+		return false;
+	end if;
+end;//
+delimiter ;
